@@ -22,13 +22,16 @@ const (
 	gracefulShutdownTimeout = 5 * time.Second
 )
 
+// Server holds params for REST API server configuration.
 type Server struct {
 }
 
+// NewServer constructs Server instance.
 func NewServer() *Server {
 	return &Server{}
 }
 
+// Serve runs REST API server.
 func (s *Server) Serve(port string) error {
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%s", port),

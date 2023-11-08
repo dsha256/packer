@@ -72,6 +72,7 @@ func (s *Server) rateLimit(next http.Handler) http.Handler {
 //	})
 //}
 
+// Metrics holds fields for metrics.
 type Metrics struct {
 	Code     int
 	Duration time.Duration
