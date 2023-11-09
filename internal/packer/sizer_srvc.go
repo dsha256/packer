@@ -84,9 +84,7 @@ func (sizes *SizerService) PutSizes(ctx context.Context, sizesToPut []int) ([]in
 
 	sizes.SortedSizes = []int{}
 	slices.Sort(sizesToPut)
-	for _, size := range sizesToPut {
-		sizes.SortedSizes = append(sizes.SortedSizes, size)
-	}
+	sizes.SortedSizes = append(sizes.SortedSizes, sizesToPut...)
 
 	return sizes.SortedSizes, nil
 }
