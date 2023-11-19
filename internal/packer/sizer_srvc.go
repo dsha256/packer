@@ -21,7 +21,9 @@ type SizerService struct {
 	SortedSizes []int
 }
 
-func NewSizer(sizes []int) *SizerService {
+var _ SizerService = SizerService{}
+
+func NewSizerService(sizes []int) *SizerService {
 	if !slices.IsSorted(sizes) {
 		slices.Sort(sizes)
 	}

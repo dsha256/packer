@@ -10,7 +10,7 @@ import (
 )
 
 func newSizer(sizes []int) *SizerService {
-	return NewSizer(sizes)
+	return NewSizerService(sizes)
 }
 
 func Test_NewSizer(t *testing.T) {
