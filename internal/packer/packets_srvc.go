@@ -10,6 +10,9 @@ const (
 	ErrorNegativeOrZeroItems = "items must be more than 0"
 )
 
+// Ensure PacketsService defined types fully satisfy Packer interfaces.
+var _ Packer = &PacketsService{}
+
 type PacketsService struct {
 }
 

@@ -17,11 +17,12 @@ const (
 
 var SortedSizes = []int{250, 500, 1000, 2000, 5000}
 
+// Ensure SizerService defined types fully satisfy Sizer interfaces.
+var _ Sizer = &SizerService{}
+
 type SizerService struct {
 	SortedSizes []int
 }
-
-var _ SizerService = SizerService{}
 
 func NewSizerService(sizes []int) *SizerService {
 	if !slices.IsSorted(sizes) {
