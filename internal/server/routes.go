@@ -19,5 +19,7 @@ func (s *Server) routes() http.Handler {
 	router.HandlerFunc(http.MethodPut, "/v1/sizes", s.putSizesHandler)
 	router.HandlerFunc(http.MethodDelete, "/v1/sizes/:size", s.deleteSizeHandler)
 
+	router.HandlerFunc(http.MethodPost, "/v1/packets", s.getPacksHandler)
+
 	return s.metrics(s.recoverPanic(s.enableCORS(s.rateLimit(router))))
 }
