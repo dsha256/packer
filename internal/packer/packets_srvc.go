@@ -7,19 +7,23 @@ import (
 )
 
 const (
+	// ErrorNegativeOrZeroItems ...
 	ErrorNegativeOrZeroItems = "items must be more than 0"
 )
 
 // Ensure PacketsService defined types fully satisfy Packer interfaces.
 var _ Packer = &PacketsService{}
 
+// PacketsService holds the Packets service related params.
 type PacketsService struct {
 }
 
+// NewPacketsService is a constructor of the PacketsService.
 func NewPacketsService() *PacketsService {
 	return &PacketsService{}
 }
 
+// GetPackets ...
 func (packets PacketsService) GetPackets(ctx context.Context, itemsToPack int) (map[int]int, error) {
 	if itemsToPack <= 0 {
 		slog.ErrorContext(ctx,
@@ -38,17 +42,17 @@ func getMinNecessaryPacks(items int) map[int]int {
 
 	for lastUsedPackIndex > 0 {
 		if items-SortedSizes[lastUsedPackIndex] >= 0 {
-			necessaryPacks[SortedSizes[lastUsedPackIndex]] += 1
+			necessaryPacks[SortedSizes[lastUsedPackIndex]]++
 			items -= SortedSizes[lastUsedPackIndex]
 		} else {
-			lastUsedPackIndex -= 1
+			lastUsedPackIndex--
 		}
 	}
 
 	if items > 0 {
 		for _, size := range SortedSizes {
 			if size >= items {
-				necessaryPacks[size] += 1
+				necessaryPacks[size]++
 				break
 			}
 		}

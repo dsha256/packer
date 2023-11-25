@@ -2,23 +2,7 @@ package packer
 
 import "context"
 
-type AggregatePacker interface {
-	Sizer
-	Packer
-}
-
-type Aggregator struct {
-	Sizer
-	Packer
-}
-
-func NewAggregator() *Aggregator {
-	return &Aggregator{
-		Sizer:  NewSizerService(SortedSizes),
-		Packer: NewPacketsService(),
-	}
-}
-
+// Sizer ...
 type Sizer interface {
 	ListSizes() []int
 	AddSize(ctx context.Context, sizeToAdd int) ([]int, error)
@@ -27,6 +11,7 @@ type Sizer interface {
 	Exists(sizeToCheckFor int) bool
 }
 
+// Packer ...
 type Packer interface {
 	GetPackets(ctx context.Context, itemsToPack int) (map[int]int, error)
 }
