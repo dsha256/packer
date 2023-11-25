@@ -45,7 +45,7 @@ func (s *Server) addSizeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) putSizeHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) putSizesHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
 		Sizes []int `json:"sizes"`
 	}
