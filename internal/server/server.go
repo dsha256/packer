@@ -10,6 +10,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/dsha256/packer/internal/packer"
 )
 
 const (
@@ -24,11 +26,16 @@ const (
 
 // Server holds params for REST API server configuration.
 type Server struct {
+	SizerSrvc  *packer.SizerService
+	PackerSrvc *packer.PacketsService
 }
 
 // NewServer constructs Server instance.
-func NewServer() *Server {
-	return &Server{}
+func NewServer(sizerSrvc *packer.SizerService, packerSrvc *packer.PacketsService) *Server {
+	return &Server{
+		SizerSrvc:  sizerSrvc,
+		PackerSrvc: packerSrvc,
+	}
 }
 
 // Serve runs REST API server.

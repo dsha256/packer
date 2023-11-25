@@ -61,17 +61,6 @@ func (s *Server) rateLimit(next http.Handler) http.Handler {
 	})
 }
 
-//func (s *Server) rateLimit(next http.Handler) http.Handler {
-//	limiter := rate.NewLimiter(2, 4)
-//	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-//		if !limiter.Allow() {
-//			s.rateLimitExceededResponse(w, r)
-//			return
-//		}
-//		next.ServeHTTP(w, r)
-//	})
-//}
-
 // Metrics holds fields for metrics.
 type Metrics struct {
 	Code     int

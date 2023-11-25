@@ -3,6 +3,7 @@ package main
 import (
 	"log/slog"
 
+	"github.com/dsha256/packer/internal/packer"
 	"github.com/dsha256/packer/internal/server"
 )
 
@@ -13,7 +14,10 @@ func main() {
 }
 
 func bootstrap() {
-	newServer := server.NewServer()
+	newSizerSrvc := packer.NewSizerService(packer.SortedSizes)
+	newPackerSrvc := packer.NewPacketsService()
+
+	newServer := server.NewServer(newSizerSrvc, newPackerSrvc)
 	err := newServer.Serve(restAPIPort)
 	if err != nil {
 		slog.Error(err.Error())

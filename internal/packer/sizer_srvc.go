@@ -8,6 +8,7 @@ import (
 	"sort"
 )
 
+// ERR consts ...
 const (
 	ErrorNegativeOrZeroSize = "size must be more than 0"
 	ErrorDuplicatedSizes    = "size already exists or incoming sizes contains duplications"
@@ -15,15 +16,18 @@ const (
 	ErrorSizeDoesNotExist   = "size does not exist"
 )
 
+// SortedSizes holds sorted sizes and is used for initialing.
 var SortedSizes = []int{250, 500, 1000, 2000, 5000}
 
 // Ensure SizerService defined types fully satisfy Sizer interfaces.
 var _ Sizer = &SizerService{}
 
+// SizerService ...
 type SizerService struct {
 	SortedSizes []int
 }
 
+// NewSizerService ...
 func NewSizerService(sizes []int) *SizerService {
 	if !slices.IsSorted(sizes) {
 		slices.Sort(sizes)
@@ -37,10 +41,12 @@ func NewSizerService(sizes []int) *SizerService {
 	return sizesSrvc
 }
 
+// ListSizes ...
 func (sizes *SizerService) ListSizes() []int {
 	return sizes.SortedSizes
 }
 
+// AddSize ...
 func (sizes *SizerService) AddSize(ctx context.Context, sizeToAdd int) ([]int, error) {
 	if sizeToAdd <= 0 {
 		return []int{}, errors.New(ErrorNegativeOrZeroSize)
@@ -59,6 +65,7 @@ func (sizes *SizerService) AddSize(ctx context.Context, sizeToAdd int) ([]int, e
 	return sizes.SortedSizes, nil
 }
 
+// PutSizes ...
 func (sizes *SizerService) PutSizes(ctx context.Context, sizesToPut []int) ([]int, error) {
 	if len(sizesToPut) == 0 {
 		return []int{}, errors.New(ErrorZeroSizesQuantity)
@@ -92,6 +99,7 @@ func (sizes *SizerService) PutSizes(ctx context.Context, sizesToPut []int) ([]in
 	return sizes.SortedSizes, nil
 }
 
+// DeleteSize ...
 func (sizes *SizerService) DeleteSize(ctx context.Context, sizeToDelete int) ([]int, error) {
 	if sizeToDelete <= 0 {
 		slog.ErrorContext(ctx,
@@ -117,6 +125,7 @@ func (sizes *SizerService) DeleteSize(ctx context.Context, sizeToDelete int) ([]
 	return sizes.SortedSizes, nil
 }
 
+// Exists ...
 func (sizes *SizerService) Exists(sizeToCheckFor int) bool {
 	_, exists := slices.BinarySearch(sizes.SortedSizes, sizeToCheckFor)
 	return exists

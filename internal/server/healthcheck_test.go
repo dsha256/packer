@@ -59,7 +59,7 @@ func TestHandlers_HealthcheckHandler(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			server := NewServer()
+			server := NewServer(nil, nil)
 			recorder := httptest.NewRecorder()
 
 			url := "/v1/healthcheck"
