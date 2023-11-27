@@ -1,0 +1,9 @@
+# JetBrains
+.idea
+
+# Project
+bin
+.github
+.gitignore
+renovate.json
+Makefile
