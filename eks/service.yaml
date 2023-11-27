@@ -4,7 +4,7 @@ metadata:
   name: packer-api-service
 spec:
   selector:
-    app.kubernetes.io/name: packer-api
+    app: packer-api
   ports:
     - protocol: TCP
       port: 80
