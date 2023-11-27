@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: packer-api-deployment
+  labels:
+    app: packer-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: packer-api
+  template:
+    metadata:
+      labels:
+        app: packer-api
+    spec:
+      containers:
+        - name: packer-api
+          image: 425727356824.dkr.ecr.eu-north-1.amazonaws.com/packer:latest
+          ports:
+            - containerPort: 8080
