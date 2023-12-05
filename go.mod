@@ -1,6 +1,6 @@
 module github.com/dsha256/packer
 
-go 1.21.4
+go 1.21.5
 
 require (
 	github.com/felixge/httpsnoop v1.0.4
