@@ -5,7 +5,7 @@ COPY . .
 RUN go build -o main ./cmd/api/main.go
 
 # Run stage
-FROM alpine:3.18
+FROM alpine:3.19
 WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/start.sh .
