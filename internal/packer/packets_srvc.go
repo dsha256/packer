@@ -16,11 +16,14 @@ var _ Packer = &PacketsService{}
 
 // PacketsService holds the Packets service related params.
 type PacketsService struct {
+	sizerSrvc *SizerService
 }
 
 // NewPacketsService is a constructor of the PacketsService.
-func NewPacketsService() *PacketsService {
-	return &PacketsService{}
+func NewPacketsService(sizerSrvc *SizerService) *PacketsService {
+	return &PacketsService{
+		sizerSrvc: sizerSrvc,
+	}
 }
 
 // GetPackets ...
@@ -32,25 +35,25 @@ func (packets PacketsService) GetPackets(ctx context.Context, itemsToPack int) (
 		return map[int]int{}, errors.New(ErrorNegativeOrZeroItems)
 	}
 
-	return getMinNecessaryPacks(itemsToPack), nil
+	return getMinNecessaryPacks(itemsToPack, packets.sizerSrvc.SortedSizes), nil
 }
 
 // getMinNecessaryPacks calculates minimum packs quantity for given items based on packs sizes.
-func getMinNecessaryPacks(items int) map[int]int {
+func getMinNecessaryPacks(items int, sortedSizes []int) map[int]int {
 	necessaryPacks := make(map[int]int)
-	lastUsedPackIndex := len(SortedSizes) - 1
+	lastUsedPackIndex := len(sortedSizes) - 1
 
 	for lastUsedPackIndex > 0 {
-		if items-SortedSizes[lastUsedPackIndex] >= 0 {
-			necessaryPacks[SortedSizes[lastUsedPackIndex]]++
-			items -= SortedSizes[lastUsedPackIndex]
+		if items-sortedSizes[lastUsedPackIndex] >= 0 {
+			necessaryPacks[sortedSizes[lastUsedPackIndex]]++
+			items -= sortedSizes[lastUsedPackIndex]
 		} else {
 			lastUsedPackIndex--
 		}
 	}
 
 	if items > 0 {
-		for _, size := range SortedSizes {
+		for _, size := range sortedSizes {
 			if size >= items {
 				necessaryPacks[size]++
 				break
