@@ -28,6 +28,9 @@ const (
 type Server struct {
 	SizerSrvc  *packer.SizerService
 	PackerSrvc *packer.PacketsService
+	cors       struct {
+		trustedOrigins []string
+	}
 }
 
 // NewServer constructs Server instance.
