@@ -27,22 +27,9 @@ func (s *Server) recoverPanic(next http.Handler) http.Handler {
 
 func (s *Server) enableCORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Vary", "Origin")
-		w.Header().Add("Vary", "Access-Control-Request-Method")
-		origin := r.Header.Get("Origin")
-		if origin != "" {
-			for i := range s.cors.trustedOrigins {
-				if origin == s.cors.trustedOrigins[i] {
-					w.Header().Set("Access-Control-Allow-Origin", origin)
-					if r.Method == http.MethodOptions && r.Header.Get("Access-Control-Request-Method") != "" {
-						w.Header().Set("Access-Control-Allow-Methods", "OPTIONS, POST, PUT, PATCH, DELETE")
-						w.WriteHeader(http.StatusOK)
-						return
-					}
-					break
-				}
-			}
-		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Accept")
+		w.Header().Add("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, UPDATE, DELETE")
 		next.ServeHTTP(w, r)
 	})
 }
