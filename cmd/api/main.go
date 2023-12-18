@@ -15,7 +15,7 @@ func main() {
 
 func bootstrap() {
 	newSizerSrvc := packer.NewSizerService(packer.SortedSizes)
-	newPackerSrvc := packer.NewPacketsService()
+	newPackerSrvc := packer.NewPacketsService(newSizerSrvc)
 
 	newServer := server.NewServer(newSizerSrvc, newPackerSrvc)
 	err := newServer.Serve(restAPIPort)

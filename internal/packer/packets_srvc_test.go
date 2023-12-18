@@ -8,12 +8,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func newPacker() *PacketsService {
-	return NewPacketsService()
+func newPacker(sizes []int) *PacketsService {
+	sizerSrvc := NewSizerService(sizes)
+	return NewPacketsService(sizerSrvc)
 }
 
 func TestPacketsService_GetPackets(t *testing.T) {
-	packer := newPacker()
+	packer := newPacker(SortedSizes)
 
 	packets, err := packer.GetPackets(context.Background(), 0)
 	require.True(t, reflect.DeepEqual(packets, map[int]int{}))
@@ -67,7 +68,7 @@ func Test_getMinNecessaryPacks(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		gotNecessaryPacks := getMinNecessaryPacks(tc.Items)
+		gotNecessaryPacks := getMinNecessaryPacks(tc.Items, SortedSizes)
 		if !reflect.DeepEqual(tc.WantNecessaryPacks, gotNecessaryPacks) {
 			t.Fatalf("For %v items, expected: %v, got %v", tc.Items, tc.WantNecessaryPacks, gotNecessaryPacks)
 		}

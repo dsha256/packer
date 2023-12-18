@@ -42,8 +42,8 @@ func TestSizesHandler_listSizes(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			newPackerSrvc := packer.NewPacketsService()
 			newSizerSrvc := packer.NewSizerService(packer.SortedSizes)
+			newPackerSrvc := packer.NewPacketsService(newSizerSrvc)
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
@@ -109,8 +109,8 @@ func TestSizesHandler_addSize(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			newPackerSrvc := packer.NewPacketsService()
 			newSizerSrvc := packer.NewSizerService(packer.SortedSizes)
+			newPackerSrvc := packer.NewPacketsService(newSizerSrvc)
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
@@ -190,8 +190,8 @@ func TestSizesHandler_putSizeHandler(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			newPackerSrvc := packer.NewPacketsService()
 			newSizerSrvc := packer.NewSizerService(packer.SortedSizes)
+			newPackerSrvc := packer.NewPacketsService(newSizerSrvc)
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 

@@ -14,6 +14,8 @@ func (s *Server) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/api/v1/healthcheck", s.healthcheckHandler)
 
+	router.HandlerFunc(http.MethodPost, "/api/v1/packets", s.getPacksHandler)
+
 	router.HandlerFunc(http.MethodGet, "/api/v1/sizes", s.listSizesHandler)
 	router.HandlerFunc(http.MethodPost, "/api/v1/sizes", s.addSizeHandler)
 	router.HandlerFunc(http.MethodPut, "/api/v1/sizes", s.putSizesHandler)
