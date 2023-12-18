@@ -47,7 +47,7 @@ func TestSizesHandler_listSizes(t *testing.T) {
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
-			url := "/v1/tables"
+			url := "/api/v1/tables"
 			req, err := http.NewRequest(tc.method, url, nil)
 			require.NoError(t, err)
 
@@ -114,7 +114,7 @@ func TestSizesHandler_addSize(t *testing.T) {
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
-			url := "/v1/sizes"
+			url := "/api/v1/sizes"
 			reqBody := map[string]int{"size": tc.sizeToAdd}
 			var buf bytes.Buffer
 			_ = json.NewEncoder(&buf).Encode(reqBody)
@@ -195,7 +195,7 @@ func TestSizesHandler_putSizeHandler(t *testing.T) {
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
-			url := "/v1/sizes"
+			url := "/api/v1/sizes"
 			reqBody := map[string][]int{"sizes": tc.sizesToAdd}
 			var buf bytes.Buffer
 			_ = json.NewEncoder(&buf).Encode(reqBody)

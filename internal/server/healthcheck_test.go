@@ -62,7 +62,7 @@ func TestHandlers_HealthcheckHandler(t *testing.T) {
 			server := NewServer(nil, nil)
 			recorder := httptest.NewRecorder()
 
-			url := "/v1/healthcheck"
+			url := "/api/v1/healthcheck"
 			req, err := http.NewRequest(tc.method, url, nil)
 			require.NoError(t, err)
 

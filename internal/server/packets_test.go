@@ -71,7 +71,7 @@ func TestPacketsHandler_getPacks(t *testing.T) {
 			server := NewServer(newSizerSrvc, newPackerSrvc)
 			recorder := httptest.NewRecorder()
 
-			url := "/v1/packets"
+			url := "/api/v1/packets"
 			reqBody := map[string]int{"items": tc.items}
 			var buf bytes.Buffer
 			_ = json.NewEncoder(&buf).Encode(reqBody)
