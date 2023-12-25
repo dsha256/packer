@@ -43,11 +43,20 @@ func getMinNecessaryPacks(items int, sortedSizes []int) map[int]int {
 	necessaryPacks := make(map[int]int)
 	lastUsedPackIndex := len(sortedSizes) - 1
 
+	diff := 0
 	for lastUsedPackIndex > 0 {
 		if items-sortedSizes[lastUsedPackIndex] >= 0 {
 			necessaryPacks[sortedSizes[lastUsedPackIndex]]++
 			items -= sortedSizes[lastUsedPackIndex]
 		} else {
+			if _, exists := necessaryPacks[sortedSizes[lastUsedPackIndex]]; exists {
+				diff = sortedSizes[lastUsedPackIndex] - items
+				if sortedSizes[lastUsedPackIndex-1] > diff {
+					necessaryPacks[sortedSizes[lastUsedPackIndex]]++
+					items -= sortedSizes[lastUsedPackIndex]
+					break
+				}
+			}
 			lastUsedPackIndex--
 		}
 	}
