@@ -21,6 +21,16 @@
 
 ---
 
+# 👀 Run locally
+### Navigate to the root folder of the project and run
+```shell
+docker compose up
+```
+### Then you get the API running on your local machine on port 8080:
+* #### API - http://127.0.0.1:8080
+
+---
+
 # 🔥 Want to give it a shot?
 ### Please go to the docs page where you can test the functionality out in real time.
 <a href="https://app.theneo.io/rad/gymshark/get-packets">
