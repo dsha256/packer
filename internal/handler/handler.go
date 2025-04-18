@@ -32,7 +32,7 @@ func New(
 }
 
 func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
-	mux.Handle("/api/v1/packet", h.wrapHandler(h.handlePackets))
+	mux.Handle("/api/v1/packet/calculate", h.wrapHandler(h.handlePacketsCalculation))
 	mux.Handle("/api/v1/packet/size", h.wrapHandler(h.handlePacketSizes))
 	mux.Handle("/api/v1/health", h.wrapHandler(h.handleHealth))
 	h.logger.Info("Routes registered")
