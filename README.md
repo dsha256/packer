@@ -32,7 +32,7 @@ This project includes a Docker Compose configuration to run both the backend and
 
 To stop the services:
 ```bash
-docker-compose down
+docker-compose down --remove-orphans
 ```
 
 ### Rebuilding the Services
