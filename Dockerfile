@@ -13,7 +13,7 @@ FROM builder AS development
 WORKDIR /app
 COPY . .
 COPY .air.toml .
-EXPOSE 3000
+EXPOSE 3000 4667
 CMD ["air", "-c", ".air.toml"]
 
 # Production stage

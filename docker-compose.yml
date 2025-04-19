@@ -5,12 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
+      target: development
     ports:
       - "3000:3000"
       - "4667:4667"
     volumes:
       - ./config.yaml:/app/config.yaml
+      - .:/app
     networks:
       - app-network
     restart: unless-stopped
