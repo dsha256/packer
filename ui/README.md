@@ -21,7 +21,7 @@ A modern Next.js application for managing and calculating optimal packet sizes.
 1. Install dependencies:
 
 ```bash
-npm install
+pnpm install
 # or
 yarn install
 ```
@@ -29,7 +29,7 @@ yarn install
 2. Start the development server:
 
 ```bash
-npm run dev
+pnpm run dev
 # or
 yarn dev
 ```
@@ -45,7 +45,7 @@ yarn dev
 ## Building for Production
 
 ```bash
-npm run build
+pnpm run build
 # or
 yarn build
 ```
@@ -53,7 +53,7 @@ yarn build
 Then start the production server:
 
 ```bash
-npm run start
+pnpm run start
 # or
 yarn start
 ``` 
