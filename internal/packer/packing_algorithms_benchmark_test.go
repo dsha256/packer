@@ -8,6 +8,8 @@ import (
 )
 
 func benchmarkCalculateOptimalPacketsForItems(b *testing.B, calculateFunc func(params *packer.CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity) {
+	b.Helper()
+
 	testCases := []struct {
 		Name        string
 		PacketSizes []types.PacketSize
