@@ -7,6 +7,7 @@ import (
 	"github.com/dsha256/packer/internal/types"
 )
 
+//nolint:dupl // Clearer in this case.
 func benchmarkCalculateOptimalPacketsForItemsWithProductOfTenSizes(b *testing.B, calculateFunc func(params *packer.CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity) {
 	b.Helper()
 
@@ -63,6 +64,7 @@ func benchmarkCalculateOptimalPacketsForItemsWithProductOfTenSizes(b *testing.B,
 	}
 }
 
+//nolint:dupl // Clearer in this case.
 func benchmarkCalculateOptimalPacketsForItemsWithPrimeSizes(b *testing.B, calculateFunc func(params *packer.CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity) {
 	b.Helper()
 

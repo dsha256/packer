@@ -36,7 +36,7 @@ func (s *packer) SetPacketSizes(_ context.Context, sizes []types.PacketSize) err
 }
 
 func (s *packer) GetOptimalPackets(_ context.Context, items int) (map[types.PacketSize]types.PacketQuantity, error) {
-	return CalculateOptimalPacketsForItemsV2(&CalculateOptimalPacketsForItemsParams{
+	return CalculateOptimalPacketsForItemsV1(&CalculateOptimalPacketsForItemsParams{
 		Items:       items,
 		PacketSizes: s.packetSizes,
 	}), nil
