@@ -20,6 +20,7 @@ func (h MinHeap) Swap(i, j int) {
 }
 
 func (h *MinHeap) Push(x any) {
+	//nolint:errcheck // No need, since this is specifically designed for this.
 	*h = append(*h, x.(HeapElement))
 }
 
@@ -28,5 +29,6 @@ func (h *MinHeap) Pop() any {
 	n := len(old)
 	x := old[n-1]
 	*h = old[0 : n-1]
+
 	return x
 }

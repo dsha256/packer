@@ -17,7 +17,7 @@ func ValidatePacketSizes(sizes []types.PacketSize) error {
 		if size < 1 {
 			return ErrNonPositiveSize
 		}
-		tempSizes[size] += 1
+		tempSizes[size]++
 	}
 
 	for _, frequency := range tempSizes {

@@ -13,9 +13,7 @@ import (
 	"github.com/dsha256/packer/pkg/cache"
 )
 
-var (
-	ErrMethodNotAllowed = errors.New("method not allowed")
-)
+var ErrMethodNotAllowed = errors.New("method not allowed")
 
 type Handler struct {
 	logger *slog.Logger

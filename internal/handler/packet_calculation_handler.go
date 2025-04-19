@@ -10,9 +10,7 @@ import (
 	"github.com/dsha256/packer/pkg/safeconv"
 )
 
-var (
-	ErrInvalidItems = errors.New("items should be positive integer")
-)
+var ErrInvalidItems = errors.New("items should be positive integer")
 
 func (h *Handler) handlePacketsCalculation(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -27,6 +25,7 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 	if err := r.ParseForm(); err != nil {
 		h.logger.Warn("Error parsing the request payload", "err", err)
 		h.handleError(w, err, http.StatusBadRequest)
+
 		return
 	}
 
@@ -35,6 +34,7 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 	if itemsInt < 1 {
 		h.logger.Warn("Invalid incoming items", "err", ErrInvalidItems)
 		h.handleError(w, ErrInvalidItems, http.StatusBadRequest)
+
 		return
 	}
 
@@ -45,6 +45,7 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 		} else {
 			h.logger.Error("Failed to get items", "err", err)
 			h.handleError(w, err, http.StatusInternalServerError)
+
 			return
 		}
 	}
@@ -52,6 +53,7 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 		responder.WriteSuccess(w, http.StatusOK, "", map[string]any{
 			"optimal_packets": cachedPackets,
 		})
+
 		return
 	}
 
@@ -59,12 +61,14 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		h.logger.Error("Failed to get optimal packets", "err", err)
 		h.handleError(w, err, http.StatusInternalServerError)
+
 		return
 	}
 
 	if err = h.cache.Set(r.Context(), items, packets, 1*time.Hour); err != nil {
 		h.logger.Error("Failed to set items to cache", "err", err)
 		h.handleError(w, err, http.StatusInternalServerError)
+
 		return
 	}
 

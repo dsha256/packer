@@ -8,7 +8,7 @@ import (
 )
 
 type Config struct {
-	Server Server `json:"server"   yaml:"server"`
+	Server Server `json:"server" yaml:"server"`
 }
 
 type Server struct {

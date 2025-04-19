@@ -1,34 +1,55 @@
-package packer
+package packer_test
 
 import (
 	"testing"
 
+	"github.com/dsha256/packer/internal/packer"
 	"github.com/dsha256/packer/internal/types"
 )
 
-func benchmarkCalculateOptimalPacketsForItems(b *testing.B, calculateFunc func(params *CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity) {
+func benchmarkCalculateOptimalPacketsForItems(b *testing.B, calculateFunc func(params *packer.CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity) {
 	testCases := []struct {
 		Name        string
-		Items       int
 		PacketSizes []types.PacketSize
+		Items       int
 	}{
-		{"ExtraSmallQuantityOfItems", 250, []types.PacketSize{250, 500, 1000, 2000, 5000}},
-		{"SmallQuantityOfItems", 12001, []types.PacketSize{250, 500, 1000, 2000, 5000}},
-		{"MediumQuantityOfItems", 100_000, []types.PacketSize{23, 31, 53}},
-		{"LargeQuantityOfItems", 500_000, []types.PacketSize{23, 31, 53}},
-		{"ExtraLargeQuantityOfItems", 10_000_000, []types.PacketSize{250, 500, 1000, 2000, 5000}},
+		{
+			Name:        "ExtraSmallQuantityOfItems",
+			PacketSizes: []types.PacketSize{250, 500, 1000, 2000, 5000},
+			Items:       250,
+		},
+		{
+			Name:        "SmallQuantityOfItems",
+			PacketSizes: []types.PacketSize{250, 500, 1000, 2000, 5000},
+			Items:       12001,
+		},
+		{
+			Name:        "MediumQuantityOfItems",
+			PacketSizes: []types.PacketSize{23, 31, 53},
+			Items:       100_000,
+		},
+		{
+			Name:        "LargeQuantityOfItems",
+			PacketSizes: []types.PacketSize{23, 31, 53},
+			Items:       500_000,
+		},
+		{
+			Name:        "ExtraLargeQuantityOfItems",
+			PacketSizes: []types.PacketSize{250, 500, 1000, 2000, 5000},
+			Items:       10_000_000,
+		},
 	}
 
 	for _, testCase := range testCases {
 		b.Run(testCase.Name, func(b *testing.B) {
-			params := &CalculateOptimalPacketsForItemsParams{
+			params := &packer.CalculateOptimalPacketsForItemsParams{
 				Items:       testCase.Items,
 				PacketSizes: testCase.PacketSizes,
 			}
 
 			b.ResetTimer()
 
-			for i := 0; i < b.N; i++ {
+			for b.Loop() {
 				calculateFunc(params)
 			}
 		})
@@ -36,9 +57,9 @@ func benchmarkCalculateOptimalPacketsForItems(b *testing.B, calculateFunc func(p
 }
 
 func Benchmark_CalculateOptimalPacketsForItemsV2(b *testing.B) {
-	benchmarkCalculateOptimalPacketsForItems(b, CalculateOptimalPacketsForItemsV2)
+	benchmarkCalculateOptimalPacketsForItems(b, packer.CalculateOptimalPacketsForItemsV2)
 }
 
 func Benchmark_CalculateOptimalPacketsForItemsV1(b *testing.B) {
-	benchmarkCalculateOptimalPacketsForItems(b, CalculateOptimalPacketsForItemsV1)
+	benchmarkCalculateOptimalPacketsForItems(b, packer.CalculateOptimalPacketsForItemsV1)
 }

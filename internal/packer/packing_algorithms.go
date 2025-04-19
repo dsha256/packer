@@ -8,8 +8,8 @@ import (
 )
 
 type CalculateOptimalPacketsForItemsParams struct {
-	Items       int
 	PacketSizes []types.PacketSize
+	Items       int
 }
 
 func CalculateOptimalPacketsForItemsV1(params *CalculateOptimalPacketsForItemsParams) map[types.PacketSize]types.PacketQuantity {
@@ -45,11 +45,13 @@ func CalculateOptimalPacketsForItemsV1(params *CalculateOptimalPacketsForItemsPa
 	for s := params.Items; s <= maxSum; s++ {
 		if dpPacks[s] < math.MaxInt32 {
 			bestSum = s
+
 			break
 		}
 	}
 	if bestSum < 0 {
 		result[types.PacketSize(sizes[0])] = 1
+
 		return result
 	}
 
@@ -63,6 +65,7 @@ func CalculateOptimalPacketsForItemsV1(params *CalculateOptimalPacketsForItemsPa
 			result[types.PacketSize(sz)] = types.PacketQuantity(cnt)
 		}
 	}
+
 	return result
 }
 
@@ -82,6 +85,7 @@ func CalculateOptimalPacketsForItemsV2(params *CalculateOptimalPacketsForItemsPa
 	minNumPacks[0] = 0
 
 	for minHeap.Len() > 0 {
+		//nolint:errcheck // No need, since this is specifically designed for this.
 		heapElement := heap.Pop(minHeap).(HeapElement)
 		total := heapElement.total
 		numPacks := heapElement.numPacks
@@ -99,6 +103,7 @@ func CalculateOptimalPacketsForItemsV2(params *CalculateOptimalPacketsForItemsPa
 				result[s]++
 				currentTotal = pred.prevT
 			}
+
 			return result
 		}
 

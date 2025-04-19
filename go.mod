@@ -1,6 +1,6 @@
 module github.com/dsha256/packer
 
-go 1.24.2
+go 1.24
 
 require (
 	github.com/goccy/go-json v0.10.5
