@@ -15,6 +15,7 @@ import (
 	"github.com/dsha256/packer/internal/packer"
 	"github.com/dsha256/packer/pkg/cache"
 	"github.com/dsha256/packer/pkg/config"
+	"github.com/dsha256/packer/pkg/profiler"
 )
 
 func main() {
@@ -61,6 +62,17 @@ func main() {
 			os.Exit(1)
 		}
 	}()
+
+	if cfg.Profiler.Enabled {
+		if err = profiler.New().WithConfig(&profiler.Config{
+			HTTPPort:                 cfg.Profiler.Port,
+			URLPathFirstSubdirectory: "pprof",
+			HTTPReadHeaderTimeout:    cfg.Profiler.ReadHeaderTimeout,
+		}).Start(context.TODO()); err != nil {
+			logger.Error("Failed to start profiler server", "error", err)
+			os.Exit(1)
+		}
+	}
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
