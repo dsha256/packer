@@ -1,8 +1,10 @@
-# Packet Manager
+# Packer
 
 A system for managing and optimizing packet sizes for shipping.
 
-## Docker Compose Setup
+---
+
+## Run Locally - Docker Compose Setup
 
 This project includes a Docker Compose configuration to run both the backend and frontend services together.
 
@@ -49,6 +51,8 @@ If you make changes to the code, you'll need to rebuild the services:
 docker-compose up -d --build
 ```
 
+---
+
 ## Development
 
 ### Backend (Go)
@@ -77,6 +81,8 @@ To check the logs for a specific service:
 docker-compose logs -f backend
 docker-compose logs -f frontend
 ```
+
+---
 
 ## Taskfile Commands
 
@@ -108,3 +114,28 @@ The following tasks launch web UIs for different types of profiling (available a
 - `task pprof_symbol_web` - Symbol lookup
 
 Note: Profiling endpoints are only available when the Go application is running. 
+
+---
+
+## Algorithms used for packing
+
+### Summary of Complexities
+
+| **Algorithm**                     | **Time Complexity**                                   | **Space Complexity**       | **Approach**                           |
+|------------------------------------|------------------------------------------------------|-----------------------------|----------------------------------------|
+| **`CalculateOptimalPacketsForItemsV1`** | `O((items + maxPacketSize) * len(packetSizes))`      | `O(items + maxPacketSize)` | Dynamic Programming (Backtracking)    |
+| **`CalculateOptimalPacketsForItemsV2`** | `O((items + maxPacketSize) * len(packetSizes) * log(items + maxPacketSize))` | `O(items + maxPacketSize)` | Dijkstra's Algorithm with Min-Heap    |
+
+### Key Differences in Approach
+
+| **Factor**               | **V1 (DP)**                                | **V2 (Min-Heap / Dijkstra)**             |
+|--------------------------|--------------------------------------------|------------------------------------------|
+| **Algorithm Type**       | Dynamic Programming                        | Priority Queue + Greedy Traversal (Dijkstra) |
+| **Main Data Structure**  | Arrays (`dpPacks`, `prevPacket`)            | Heap (`MinHeap`) + Maps (`minNumPacks`)  |
+| **Backtracking**         | Uses `prevPacket` to reconstruct solution. | Uses `predecessor` map to reconstruct solution. |
+| **Efficiency**           | Processes all totals up to `maxSum`.       | Prioritizes smaller totals with fewer packets first. |
+
+### Benchmarks
+
+- Benchmarks and other implementation details are given in this folder [internal/packer](https://github.com/dsha256/packer/tree/main/internal/packer)
+- Actual benchmarks' results can be found in this folder [benchmark](https://github.com/dsha256/packer/tree/main/benchmark)

@@ -2,6 +2,26 @@
 
 This document presents the benchmarking results and analysis of two algorithms, `CalculateOptimalPacketsForItemsV1` and `CalculateOptimalPacketsForItemsV2`, used to calculate the optimal allocation of packets for various item quantities. The benchmarking was conducted to evaluate their performance in terms of execution time, memory allocation, and scalability across different input sizes and packet size configurations.
 
+---
+
+### Summary of Complexities
+
+| **Algorithm**                     | **Time Complexity**                                   | **Space Complexity**       | **Approach**                           |
+|------------------------------------|------------------------------------------------------|-----------------------------|----------------------------------------|
+| **`CalculateOptimalPacketsForItemsV1`** | `O((items + maxPacketSize) * len(packetSizes))`      | `O(items + maxPacketSize)` | Dynamic Programming (Backtracking)    |
+| **`CalculateOptimalPacketsForItemsV2`** | `O((items + maxPacketSize) * len(packetSizes) * log(items + maxPacketSize))` | `O(items + maxPacketSize)` | Dijkstra's Algorithm with Min-Heap    |
+
+---
+
+### Key Differences in Approach
+
+| **Factor**               | **V1 (DP)**                                | **V2 (Min-Heap / Dijkstra)**             |
+|--------------------------|--------------------------------------------|------------------------------------------|
+| **Algorithm Type**       | Dynamic Programming                        | Priority Queue + Greedy Traversal (Dijkstra) |
+| **Main Data Structure**  | Arrays (`dpPacks`, `prevPacket`)            | Heap (`MinHeap`) + Maps (`minNumPacks`)  |
+| **Backtracking**         | Uses `prevPacket` to reconstruct solution. | Uses `predecessor` map to reconstruct solution. |
+| **Efficiency**           | Processes all totals up to `maxSum`.       | Prioritizes smaller totals with fewer packets first. |
+
 ## Benchmarking Summary
 
 ### Command Used for Benchmarking
