@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  packer:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
     environment:
       - API_URL=http://packer:3000
     depends_on:
-      - packer
+      - backend
     networks:
       - app-network
     restart: unless-stopped

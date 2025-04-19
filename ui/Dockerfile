@@ -18,7 +18,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_SHARP_PATH=/app/node_modules/sharp
 # Set API URL for build time
-ARG API_URL=http://packer:3000
+ARG API_URL=http://backend:3000
 ENV API_URL=${API_URL}
 
 RUN pnpm run build
