@@ -13,18 +13,25 @@ This project includes a Docker Compose configuration to run both the backend and
 
 ### Running the Application
 
-1. Clone the repository:
+1. Clone the repository (SSH):
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone git@github.com:dsha256/packer.git
+   ```
+2. Navigate to the repository root folder:
+   ```bash
+   cd packer
    ```
 
-2. Start the services using Docker Compose:
+3. Start the services using Docker Compose:
    ```bash
    docker-compose up -d
    ```
+   Or with Taskfile:
+   ```bash
+   task compose_up
+   ```
 
-3. Access the application:
+4. Access the application:
    - Frontend: http://localhost:3001
    - Backend API: http://localhost:3000
 
