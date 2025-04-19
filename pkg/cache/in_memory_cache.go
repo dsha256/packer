@@ -11,10 +11,7 @@ import (
 
 var _ Cache = (*InMemoryCache)(nil)
 
-var (
-	ErrValueNotStringerType = errors.New("value can not be casted into a string")
-	ErrNoKey                = errors.New("key does not exist")
-)
+var ErrNoKey = errors.New("key does not exist")
 
 type InMemoryCache struct {
 	data *sync.Map
@@ -24,8 +21,8 @@ func NewInMemoryCache() Cache {
 	return &InMemoryCache{data: &sync.Map{}}
 }
 
-func (c *InMemoryCache) Get(_ context.Context, key string) (any, error) {
-	value, exists := c.data.Load(key)
+func (cache *InMemoryCache) Get(_ context.Context, key string) (any, error) {
+	value, exists := cache.data.Load(key)
 	if !exists {
 		return "", ErrNoKey
 	}
@@ -33,8 +30,8 @@ func (c *InMemoryCache) Get(_ context.Context, key string) (any, error) {
 	return value, nil
 }
 
-func (c *InMemoryCache) Set(ctx context.Context, key string, value any, expiration time.Duration) error {
-	c.data.Store(key, value)
+func (cache *InMemoryCache) Set(ctx context.Context, key string, value any, expiration time.Duration) error {
+	cache.data.Store(key, value)
 
 	if expiration < 1 {
 		return nil
@@ -42,7 +39,7 @@ func (c *InMemoryCache) Set(ctx context.Context, key string, value any, expirati
 
 	go func() {
 		<-time.After(expiration)
-		if err := c.Del(ctx, key); err != nil {
+		if err := cache.Del(ctx, key); err != nil {
 			slog.ErrorContext(ctx, fmt.Sprintf("failed to delete key %s: %s", key, err))
 		}
 	}()
@@ -50,8 +47,8 @@ func (c *InMemoryCache) Set(ctx context.Context, key string, value any, expirati
 	return nil
 }
 
-func (c *InMemoryCache) Del(_ context.Context, key string) error {
-	c.data.Delete(key)
+func (cache *InMemoryCache) Del(_ context.Context, key string) error {
+	cache.data.Delete(key)
 
 	return nil
 }

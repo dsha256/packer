@@ -24,7 +24,8 @@ func (h *Handler) handlePacketSizes(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) handleListPacketSizes(w http.ResponseWriter, r *http.Request) {
 	packetSizes, err := h.packer.ListPacketSizes(r.Context())
 	if err != nil {
-		h.handlePackerError(w, err)
+		h.handleError(w, err, http.StatusInternalServerError)
+
 		return
 	}
 
@@ -41,11 +42,13 @@ func (h *Handler) handlePutPacketSizes(w http.ResponseWriter, r *http.Request) {
 	var sizes PutPacketSizesRequest
 	if err := json.NewDecoder(r.Body).Decode(&sizes); err != nil {
 		h.handleError(w, err, http.StatusBadRequest)
+
 		return
 	}
 
 	if err := validation.ValidatePacketSizes(sizes.Sizes); err != nil {
 		h.handleError(w, err, http.StatusBadRequest)
+
 		return
 	}
 
@@ -54,16 +57,4 @@ func (h *Handler) handlePutPacketSizes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	responder.WriteSuccess(w, http.StatusOK, "Packet sizes have been put successfully", json.RawMessage{})
-}
-
-func (h *Handler) handlePackerError(w http.ResponseWriter, err error) {
-	status := mapPackerErrorToStatus(err)
-	h.handleError(w, err, status)
-}
-
-func mapPackerErrorToStatus(err error) int {
-	switch {
-	default:
-		return http.StatusInternalServerError
-	}
 }

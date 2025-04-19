@@ -1,8 +1,9 @@
 package responder
 
 import (
-	"encoding/json"
 	"net/http"
+
+	"github.com/goccy/go-json"
 
 	"github.com/dsha256/packer/internal/types"
 )
