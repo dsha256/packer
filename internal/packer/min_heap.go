@@ -20,8 +20,11 @@ func (h MinHeap) Swap(i, j int) {
 }
 
 func (h *MinHeap) Push(x any) {
-	//nolint:errcheck // No need, since this is specifically designed for this.
-	*h = append(*h, x.(HeapElement))
+	element, ok := x.(HeapElement) // Separate the type assertion
+	if !ok {
+		return
+	}
+	*h = append(*h, element)
 }
 
 func (h *MinHeap) Pop() any {

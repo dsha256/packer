@@ -85,8 +85,11 @@ func CalculateOptimalPacketsForItemsV2(params *CalculateOptimalPacketsForItemsPa
 	minNumPacks[0] = 0
 
 	for minHeap.Len() > 0 {
-		//nolint:errcheck // No need, since this is specifically designed for this.
-		heapElement := heap.Pop(minHeap).(HeapElement)
+		popped := heap.Pop(minHeap)
+		heapElement, ok := popped.(HeapElement)
+		if !ok {
+			return make(map[types.PacketSize]types.PacketQuantity)
+		}
 		total := heapElement.total
 		numPacks := heapElement.numPacks
 
