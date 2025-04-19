@@ -22,3 +22,24 @@ tasks:
       - gofumpt -l -w .
       - fieldalignment -fix ./...
       - go mod edit -go=1.24 && go mod tidy
+
+  benchmark_packer:
+    desc: "Run the packer service benchmarks."
+    cmds:
+      - go test -v internal/packer/*.go -bench=. -run=xxx -benchmem -benchtime=5s -count=5
+
+  compose_up:
+    desc: "Docker compose up."
+    cmds:
+      - docker compose up --build
+
+  compose_down:
+    desc: "Docker compose down."
+    cmds:
+      - docker compose down --remove-orphans
+
+  compose_fresh_restart:
+    desc: "Docker compose up & down."
+    cmds:
+      - task: compose_down
+      - task: compose_up
