@@ -13,6 +13,7 @@ import (
 
 	"github.com/dsha256/packer/internal/handler"
 	"github.com/dsha256/packer/internal/packer"
+	"github.com/dsha256/packer/pkg/cache"
 	"github.com/dsha256/packer/pkg/config"
 )
 
@@ -32,7 +33,9 @@ func main() {
 
 	newPacker := packer.New()
 
-	newHandler := handler.New(logger, newPacker)
+	newCache := cache.NewInMemoryCache()
+
+	newHandler := handler.New(logger, newPacker, newCache)
 
 	srv := &http.Server{
 		Addr: fmt.Sprintf(":%d", cfg.Server.Port),

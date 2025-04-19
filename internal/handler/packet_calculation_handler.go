@@ -3,8 +3,10 @@ package handler
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/dsha256/packer/internal/responder"
+	"github.com/dsha256/packer/pkg/cache"
 	"github.com/dsha256/packer/pkg/safeconv"
 )
 
@@ -23,6 +25,7 @@ func (h *Handler) handlePacketsCalculation(w http.ResponseWriter, r *http.Reques
 
 func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
+		h.logger.Warn("Error parsing the request payload", "err", err)
 		h.handleError(w, err, http.StatusBadRequest)
 		return
 	}
@@ -30,12 +33,37 @@ func (h *Handler) handleGetOptimalPackets(w http.ResponseWriter, r *http.Request
 	items := r.Form.Get("items")
 	itemsInt := safeconv.ParseInt(items)
 	if itemsInt < 1 {
+		h.logger.Warn("Invalid incoming items", "err", ErrInvalidItems)
 		h.handleError(w, ErrInvalidItems, http.StatusBadRequest)
+		return
+	}
+
+	cachedPackets, err := h.cache.Get(r.Context(), items)
+	if err != nil {
+		if errors.Is(err, cache.ErrNoKey) {
+			h.logger.Info("Items is not cached", "err", err)
+		} else {
+			h.logger.Error("Failed to get items", "err", err)
+			h.handleError(w, err, http.StatusInternalServerError)
+			return
+		}
+	}
+	if err == nil {
+		responder.WriteSuccess(w, http.StatusOK, "", map[string]any{
+			"optimal_packets": cachedPackets,
+		})
 		return
 	}
 
 	packets, err := h.packer.GetOptimalPackets(r.Context(), itemsInt)
 	if err != nil {
+		h.logger.Error("Failed to get optimal packets", "err", err)
+		h.handleError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	if err = h.cache.Set(r.Context(), items, packets, 1*time.Hour); err != nil {
+		h.logger.Error("Failed to set items to cache", "err", err)
 		h.handleError(w, err, http.StatusInternalServerError)
 		return
 	}

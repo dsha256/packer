@@ -10,6 +10,7 @@ import (
 	"github.com/dsha256/packer/internal/middleware"
 	"github.com/dsha256/packer/internal/packer"
 	"github.com/dsha256/packer/internal/responder"
+	"github.com/dsha256/packer/pkg/cache"
 )
 
 var (
@@ -19,15 +20,18 @@ var (
 type Handler struct {
 	logger *slog.Logger
 	packer packer.Packer
+	cache  cache.Cache
 }
 
 func New(
 	logger *slog.Logger,
 	packer packer.Packer,
+	cache cache.Cache,
 ) *Handler {
 	return &Handler{
 		logger: logger,
 		packer: packer,
+		cache:  cache,
 	}
 }
 
