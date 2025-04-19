@@ -3,3 +3,8 @@ server:
   read_timeout: "5s"
   read_header_timeout: "5s"
   write_timeout: "10s"
+
+profiler:
+  enabled: true
+  port: 4667
+  read_header_timeout: "5s"

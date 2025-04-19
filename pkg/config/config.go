@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	Server Server `json:"server" yaml:"server"`
+	Server   Server   `json:"server"   yaml:"server"`
+	Profiler Profiler `json:"profiler" yaml:"profiler"`
 }
 
 type Server struct {
@@ -16,6 +17,12 @@ type Server struct {
 	ReadTimeout       time.Duration `json:"read_timeout"        yaml:"read_timeout"`
 	ReadHeaderTimeout time.Duration `json:"read_header_timeout" yaml:"read_header_timeout"`
 	WriteTimeout      time.Duration `json:"write_timeout"       yaml:"write_timeout"`
+}
+
+type Profiler struct {
+	Port              int           `json:"port"                yaml:"port"`
+	ReadHeaderTimeout time.Duration `json:"read_header_timeout" yaml:"read_header_timeout"`
+	Enabled           bool          `json:"enabled"             yaml:"enabled"`
 }
 
 func GetConfigFromFile(path string) (*Config, error) {
