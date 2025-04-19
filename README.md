@@ -76,4 +76,35 @@ To check the logs for a specific service:
 ```bash
 docker-compose logs -f backend
 docker-compose logs -f frontend
-``` 
+```
+
+## Taskfile Commands
+
+This project uses Taskfile for task automation. Here are the available commands:
+
+### Development Tasks
+
+- `task lint` - Run the Go linter to check code quality
+- `task format` - Format all Go code using gofumpt and fieldalignment
+- `task benchmark_packer` - Run the packer service benchmarks
+
+### Docker Compose Tasks
+
+- `task compose_up` - Start the Docker Compose services
+- `task compose_down` - Stop and remove Docker Compose services
+- `task compose_fresh_restart` - Stop all services and restart them with a fresh build
+
+### Profiling Tasks
+
+The following tasks launch web UIs for different types of profiling (available at http://localhost:9090):
+
+- `task pprof_allocs_web` - Memory allocation profiling
+- `task pprof_heap_web` - Heap memory profiling
+- `task pprof_goroutine_web` - Goroutine profiling
+- `task pprof_block_web` - Blocking profiling
+- `task pprof_threadcreate_web` - Thread creation profiling
+- `task pprof_trace_web` - Execution tracing
+- `task pprof_profile_web` - CPU profiling
+- `task pprof_symbol_web` - Symbol lookup
+
+Note: Profiling endpoints are only available when the Go application is running. 
