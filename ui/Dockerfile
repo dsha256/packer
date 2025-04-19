@@ -17,6 +17,9 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_SHARP_PATH=/app/node_modules/sharp
+# Set API URL for build time
+ARG API_URL=http://packer:3000
+ENV API_URL=${API_URL}
 
 RUN pnpm run build
 
@@ -25,7 +28,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV API_URL=http://host.docker.internal:3000
+# Set default API URL for runtime
+ENV API_URL=http://packer:3000
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
