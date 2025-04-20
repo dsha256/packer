@@ -105,9 +105,12 @@ linters:
             - github.com/dsha256/packer
             - github.com/goccy/go-json
             - gopkg.in/yaml.v3
+            - github.com/stretchr/testify/require
           deny:
             - pkg: encoding/json
               desc: Use faster version github.com/goccy/go-json
+            - pkg: github.com/stretchr/testify/assert
+              desc: Use "fail fast" approach instead - github.com/stretchr/testify/require
     errcheck:
       check-type-assertions: true
       check-blank: true
