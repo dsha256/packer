@@ -90,6 +90,7 @@ This project uses Taskfile for task automation. Here are the available commands:
 
 ### Development Tasks
 
+- `task test` - Run all tests with the race flag enabled
 - `task lint` - Run the Go linter to check code quality
 - `task format` - Format all Go code using gofumpt and fieldalignment
 - `task benchmark_packer` - Run the packer service benchmarks
