@@ -8,6 +8,11 @@ vars:
     sh: go env GOPATH | sed 's/$/\/bin/'
 
 tasks:
+  test:
+    desc: "Run all tests with the race flag enabled."
+    cmds:
+      - go test -v --race ./...
+
   lint:
     desc: "Run linter."
     cmds:
