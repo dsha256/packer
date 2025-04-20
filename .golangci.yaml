@@ -105,6 +105,8 @@ linters:
             - github.com/dsha256/packer
             - github.com/goccy/go-json
             - gopkg.in/yaml.v3
+            - github.com/stretchr/testify/require
+            - github.com/stretchr/testify/assert
           deny:
             - pkg: encoding/json
               desc: Use faster version github.com/goccy/go-json
