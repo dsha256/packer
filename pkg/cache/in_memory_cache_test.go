@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/dsha256/packer/pkg/cache"
@@ -24,10 +25,13 @@ func TestInMemoryCache_Get(t *testing.T) {
 		key           string
 	}{
 		{
-			name:          "existing key returns value",
-			key:           "test-key",
-			value:         "test-value",
-			setupCache:    func(c cache.Cache) { _ = c.Set(context.Background(), "test-key", "test-value", 0) },
+			name:  "existing key returns value",
+			key:   "test-key",
+			value: "test-value",
+			setupCache: func(c cache.Cache) {
+				err := c.Set(context.Background(), "test-key", "test-value", 0)
+				require.NoError(t, err)
+			},
 			expectedValue: "test-value",
 			expectedErr:   nil,
 		},
@@ -35,7 +39,7 @@ func TestInMemoryCache_Get(t *testing.T) {
 			name:          "non-existent key returns error",
 			key:           "non-existent",
 			value:         nil,
-			setupCache:    func(c cache.Cache) {},
+			setupCache:    func(_ cache.Cache) {},
 			expectedValue: "",
 			expectedErr:   cache.ErrNoKey,
 		},
@@ -43,15 +47,18 @@ func TestInMemoryCache_Get(t *testing.T) {
 			name:          "empty key returns error",
 			key:           "",
 			value:         nil,
-			setupCache:    func(c cache.Cache) {},
+			setupCache:    func(_ cache.Cache) {},
 			expectedValue: "",
 			expectedErr:   cache.ErrNoKey,
 		},
 		{
-			name:          "expired key returns error",
-			key:           "expired-key",
-			value:         "expired-value",
-			setupCache:    func(c cache.Cache) { _ = c.Set(context.Background(), "expired-key", "expired-value", time.Millisecond) },
+			name:  "expired key returns error",
+			key:   "expired-key",
+			value: "expired-value",
+			setupCache: func(c cache.Cache) {
+				err := c.Set(context.Background(), "expired-key", "expired-value", time.Millisecond)
+				require.NoError(t, err)
+			},
 			expectedValue: "",
 			expectedErr:   cache.ErrNoKey,
 		},
@@ -71,6 +78,7 @@ func TestInMemoryCache_Get(t *testing.T) {
 			value, err := newCache.Get(context.Background(), tt.key)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
+
 				return
 			}
 
@@ -129,6 +137,7 @@ func TestInMemoryCache_Set(t *testing.T) {
 
 			if tt.wantErr {
 				require.Error(t, err)
+
 				return
 			}
 
@@ -138,6 +147,7 @@ func TestInMemoryCache_Set(t *testing.T) {
 				time.Sleep(tt.expiration + time.Millisecond)
 				_, err = newCache.Get(context.Background(), tt.key)
 				require.ErrorIs(t, err, cache.ErrNoKey)
+
 				return
 			}
 
@@ -161,20 +171,21 @@ func TestInMemoryCache_Del(t *testing.T) {
 			name: "delete existing key",
 			key:  "test-key",
 			setup: func(c cache.Cache) {
-				_ = c.Set(context.Background(), "test-key", "test-value", 0)
+				err := c.Set(context.Background(), "test-key", "test-value", 0)
+				require.NoError(t, err)
 			},
 			wantErr: false,
 		},
 		{
 			name:    "delete non-existent key",
 			key:     "non-existent",
-			setup:   func(c cache.Cache) {},
+			setup:   func(_ cache.Cache) {},
 			wantErr: false,
 		},
 		{
 			name:    "delete empty key",
 			key:     "",
-			setup:   func(c cache.Cache) {},
+			setup:   func(_ cache.Cache) {},
 			wantErr: false,
 		},
 	}
@@ -189,6 +200,7 @@ func TestInMemoryCache_Del(t *testing.T) {
 			err := newCache.Del(context.Background(), tt.key)
 			if tt.wantErr {
 				require.Error(t, err)
+
 				return
 			}
 
@@ -210,25 +222,25 @@ func TestInMemoryCache_ConcurrentAccess(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for index := range numGoroutines {
 		go func(routineID int) {
 			defer wg.Done()
 
-			for j := 0; j < operationsPerGoroutine; j++ {
+			for j := range operationsPerGoroutine {
 				key := fmt.Sprintf("key-%d-%d", routineID, j)
 				value := fmt.Sprintf("value-%d-%d", routineID, j)
 
 				err := newCache.Set(ctx, key, value, 0)
-				require.NoError(t, err)
+				assert.NoError(t, err)
 
 				gotValue, err := newCache.Get(ctx, key)
-				require.NoError(t, err)
-				require.Equal(t, value, gotValue)
+				assert.NoError(t, err)
+				assert.Equal(t, value, gotValue)
 
 				err = newCache.Del(ctx, key)
-				require.NoError(t, err)
+				assert.NoError(t, err)
 			}
-		}(i)
+		}(index)
 	}
 
 	wg.Wait()
