@@ -1,0 +1,89 @@
+name: Build and Deploy to Google Cloud Run
+
+env:
+  SERVICE_NAME: packer-combined-service
+  PROJECT_ID: packer-combined
+  IMAGE_NAME: packer-combined
+  REGISTRY: europe-west1-docker.pkg.dev
+  GCP_REGION: europe-west1
+
+on:
+  push:
+    branches:
+      - main
+#  pull_request:
+#    branches:
+#      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: packer-combined
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
+          project_id: ${{ secrets.PROJECT_ID }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: |-
+          gcloud auth configure-docker --quiet
+          gcloud auth configure-docker $GCP_REGION-docker.pkg.dev --quiet
+
+      - name: Build Docker Image
+        run: docker build -f Dockerfile.combined -t $IMAGE_NAME:latest .
+
+      - name: Set dynamic GIT_TAG
+        id: vars
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "GIT_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+          else
+            echo "GIT_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_REF_TYPE: ${{ github.ref_type }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_SHA: ${{ github.sha }}
+
+      - name: Push Docker Image to Artifact Registry
+        env:
+          GIT_TAG: ${{ env.GIT_TAG }}
+        run: |-
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/packer-combined-ar/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/packer-combined-ar/$IMAGE_NAME:$GIT_TAG
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/packer-combined-ar/$IMAGE_NAME:latest
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/packer-combined-ar/$IMAGE_NAME:$GIT_TAG
+
+      - name: Deploy to Cloud Run
+        run: |
+          echo "Deploying service: $SERVICE_NAME"
+          gcloud run deploy $SERVICE_NAME \
+            --image $GCP_REGION-docker.pkg.dev/$PROJECT_ID/packer-combined-ar/$IMAGE_NAME:latest \
+            --platform managed \
+            --region $GCP_REGION \
+            --allow-unauthenticated \
+            --port 80 \
+            --memory 512Mi \
+            --cpu 1 \
+            --max-instances 1 \
+            --min-instances 1 \
+            --timeout 120 \
+
+      - name: Show Cloud Run URL
+        run: |
+          gcloud run services describe $SERVICE_NAME \
+            --platform managed \
+            --region $GCP_REGION \
+            --format="value(status.url)"
