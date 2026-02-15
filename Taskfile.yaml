@@ -1,0 +1,89 @@
+version: "3"
+
+env:
+  ENV: local
+
+vars:
+  GOBIN:
+    sh: go env GOPATH | sed 's/$/\/bin/'
+
+tasks:
+  test:
+    desc: "Run all tests with the race flag enabled."
+    cmds:
+      - go test -v --race ./...
+
+  lint:
+    desc: "Run linter."
+    cmds:
+      - golangci-lint run
+
+  format:
+    desc: "Format all Go code."
+    aliases: [ fmt ]
+    cmds:
+      - go mod edit -go=1.25 && go mod tidy
+      - gofumpt -l -w .
+      - fieldalignment -fix ./...
+      - go mod edit -go=1.25 && go mod tidy
+
+  benchmark_packer:
+    desc: "Run the packer service benchmarks."
+    cmds:
+      - go test -v internal/packer/*.go -bench=. -run=xxx -benchmem -benchtime=5s -count=5
+
+  compose_up:
+    desc: "Docker compose up."
+    cmds:
+      - docker compose up --build
+
+  compose_down:
+    desc: "Docker compose down."
+    cmds:
+      - docker compose down --remove-orphans
+
+  compose_fresh_restart:
+    desc: "Docker compose up & down."
+    cmds:
+      - task: compose_down
+      - task: compose_up
+
+  pprof_allocs_web:
+    desc: "Launch web UI for memory allocation profiling. Shows memory allocation statistics and helps identify memory leaks."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/allocs
+
+  pprof_heap_web:
+    desc: "Launch web UI for heap profiling. Shows current heap memory usage and helps identify memory consumption patterns."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/heap
+
+  pprof_goroutine_web:
+    desc: "Launch web UI for goroutine profiling. Shows all current goroutines and their states, useful for detecting goroutine leaks."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/goroutine
+
+  pprof_block_web:
+    desc: "Launch web UI for blocking profiling. Shows where goroutines block waiting, useful for identifying contention points."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/block
+
+  pprof_threadcreate_web:
+    desc: "Launch web UI for thread creation profiling. Shows system thread creation events."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/threadcreate
+
+  pprof_trace_web:
+    desc: "Launch web UI for execution trace. Shows detailed information about goroutine execution, network blocking, and system calls."
+    cmds:
+      - go tool trace http://localhost:4667/pprof/trace
+
+  pprof_profile_web:
+    desc: "Launch web UI for CPU profiling. Shows where the program spends its time."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/profile
+
+  pprof_symbol_web:
+    desc: "Launch web UI for symbol lookup. Helps in symbol resolution for stack traces."
+    cmds:
+      - go tool pprof -http=localhost:9090 http://localhost:4667/pprof/symbol

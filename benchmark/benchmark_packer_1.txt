@@ -1,0 +1,105 @@
+goos: darwin
+goarch: arm64
+cpu: Apple M3 Pro
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~50k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~50k_Items-11         	   70032	     34789 ns/op	   30344 B/op	     454 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~50k_Items-11         	   71340	     34075 ns/op	   30344 B/op	     454 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~50k_Items-11         	   67762	     35012 ns/op	   30344 B/op	     454 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~100k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~100k_Items-11        	   34732	     70219 ns/op	   59848 B/op	     858 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~100k_Items-11        	   33714	     70389 ns/op	   59848 B/op	     858 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~100k_Items-11        	   32089	     76117 ns/op	   59848 B/op	     858 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~250k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~250k_Items-11        	   10000	    204889 ns/op	  216360 B/op	    2072 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~250k_Items-11        	   10000	    236096 ns/op	  216361 B/op	    2072 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~250k_Items-11        	   10000	    219152 ns/op	  216361 B/op	    2072 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~500k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~500k_Items-11        	    5425	    456898 ns/op	  431465 B/op	    4090 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~500k_Items-11        	    5427	    451780 ns/op	  431466 B/op	    4090 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~500k_Items-11        	    5133	    464622 ns/op	  431466 B/op	    4090 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~1M_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~1M_Items-11          	    2269	   1000940 ns/op	  877420 B/op	    9108 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~1M_Items-11          	    2455	    988827 ns/op	  877422 B/op	    9108 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~1M_Items-11          	    2355	    990505 ns/op	  877420 B/op	    9108 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~10M_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~10M_Items-11         	     253	   9427308 ns/op	 7156371 B/op	   81562 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~10M_Items-11         	     254	   9325632 ns/op	 7156376 B/op	   81562 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_ProductOfTenSizes/~10M_Items-11         	     252	   9392829 ns/op	 7156372 B/op	   81562 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~50k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~50k_Items-11         	    7512	    278758 ns/op	  884978 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~50k_Items-11         	    8784	    274223 ns/op	  884979 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~50k_Items-11         	    8804	    266426 ns/op	  884979 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~100k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~100k_Items-11        	    4778	    519525 ns/op	 1687797 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~100k_Items-11        	    4660	    494783 ns/op	 1687797 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~100k_Items-11        	    4914	    499401 ns/op	 1687797 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~250k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~250k_Items-11        	    2034	   1156902 ns/op	 4096251 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~250k_Items-11        	    2036	   1196449 ns/op	 4096249 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~250k_Items-11        	    1928	   1239326 ns/op	 4096249 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~500k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~500k_Items-11        	    1094	   2109352 ns/op	 8093946 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~500k_Items-11        	    1141	   2090206 ns/op	 8093950 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~500k_Items-11        	    1146	   2099884 ns/op	 8093949 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~1M_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~1M_Items-11          	     520	   4514662 ns/op	18055427 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~1M_Items-11          	     512	   4541275 ns/op	18055427 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~1M_Items-11          	     517	   4776434 ns/op	18055424 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~10M_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~10M_Items-11         	      58	  40262669 ns/op	162054407 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~10M_Items-11         	      61	  41224538 ns/op	162054404 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_ProductOfTenSizes/~10M_Items-11         	      60	  40621674 ns/op	162054403 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~50k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~50k_Items-11                	     177	  13109453 ns/op	 7591020 B/op	   85938 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~50k_Items-11                	     188	  12823006 ns/op	 7591024 B/op	   85938 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~50k_Items-11                	     188	  12793682 ns/op	 7591025 B/op	   85938 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~100k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~100k_Items-11               	      80	  31256472 ns/op	15115247 B/op	  190490 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~100k_Items-11               	      79	  30343781 ns/op	15115226 B/op	  190490 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~100k_Items-11               	      84	  30419332 ns/op	15115240 B/op	  190490 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~250k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~250k_Items-11               	      24	  96550403 ns/op	55073304 B/op	  493567 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~250k_Items-11               	      24	  95148043 ns/op	55073272 B/op	  493567 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~250k_Items-11               	      24	  97386597 ns/op	55073332 B/op	  493567 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~500k_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~500k_Items-11               	      10	 223330779 ns/op	109760200 B/op	  997648 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~500k_Items-11               	      10	 225514554 ns/op	109789320 B/op	  997651 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~500k_Items-11               	       9	 232546884 ns/op	109781688 B/op	  997650 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~1M_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~1M_Items-11                 	       4	 566388604 ns/op	223639824 B/op	 2251859 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~1M_Items-11                 	       4	 576849333 ns/op	223639800 B/op	 2251859 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~1M_Items-11                 	       4	 583936427 ns/op	223641328 B/op	 2251862 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~10M_Items
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~10M_Items-11                	       1	6546545375 ns/op	1824129560 B/op	20366556 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~10M_Items-11                	       1	6643569541 ns/op	1824129944 B/op	20366560 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV2_PrimeSizes/~10M_Items-11                	       1	7281380666 ns/op	1824129672 B/op	20366558 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~50k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~50k_Items-11                	    4878	    483971 ns/op	  884979 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~50k_Items-11                	    5924	    479243 ns/op	  884980 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~50k_Items-11                	    6148	    407200 ns/op	  884979 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~100k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~100k_Items-11               	    2940	    793177 ns/op	 1687799 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~100k_Items-11               	    3098	    787884 ns/op	 1687800 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~100k_Items-11               	    3112	    780239 ns/op	 1687800 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~250k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~250k_Items-11               	    1264	   1878305 ns/op	 4096253 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~250k_Items-11               	    1297	   1867360 ns/op	 4096255 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~250k_Items-11               	    1290	   1868289 ns/op	 4096254 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~500k_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~500k_Items-11               	     687	   3499679 ns/op	 8093956 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~500k_Items-11               	     685	   3502612 ns/op	 8093956 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~500k_Items-11               	     686	   3552509 ns/op	 8093955 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~1M_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~1M_Items-11                 	     308	   7627595 ns/op	18055432 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~1M_Items-11                 	     309	   7718008 ns/op	18055425 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~1M_Items-11                 	     308	   7749326 ns/op	18055433 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~10M_Items
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~10M_Items-11                	      31	  67271032 ns/op	162054405 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~10M_Items-11                	      36	  72629991 ns/op	162054392 B/op	       5 allocs/op
+Benchmark_CalculateOptimalPacketsForItemsV1_PrimeSizes/~10M_Items-11                	      36	  66154786 ns/op	162054397 B/op	       5 allocs/op
+PASS
+ok  	command-line-arguments	184.907s

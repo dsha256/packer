@@ -1,0 +1,10 @@
+server:
+  port: 3000
+  read_timeout: "10s"
+  read_header_timeout: "5s"
+  write_timeout: "120s"
+
+profiler:
+  enabled: true
+  port: 4667
+  read_header_timeout: "5s"

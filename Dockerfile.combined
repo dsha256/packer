@@ -1,0 +1,46 @@
+FROM golang:1.25-alpine AS backend-builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN go build -o packer ./cmd/api
+
+FROM node:20-alpine AS ui-builder
+RUN npm install -g pnpm
+WORKDIR /app
+COPY ui/package.json ui/pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile
+COPY ui/ ./
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_SHARP_PATH=/app/node_modules/sharp
+ENV API_URL=http://localhost:3000
+RUN pnpm run build
+
+FROM alpine:3.21
+RUN apk add --no-cache bash curl nodejs npm
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+COPY --from=backend-builder /app/packer /usr/local/bin/packer
+COPY config.yaml /app/config.yaml
+COPY scripts/start-combined.sh /app/start-combined.sh
+RUN chmod +x /app/start-combined.sh
+
+WORKDIR /app/ui
+COPY --from=ui-builder /app/package.json ./package.json
+COPY --from=ui-builder /app/node_modules ./node_modules
+COPY --from=ui-builder /app/.next ./.next
+COPY --from=ui-builder /app/next.config.js ./next.config.js
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV API_URL=http://localhost:3000
+ENV PORT=80
+ENV HOSTNAME="0.0.0.0"
+
+WORKDIR /app
+
+EXPOSE 80
+
+CMD ["/app/start-combined.sh"]
