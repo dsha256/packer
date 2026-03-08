@@ -16,7 +16,7 @@ ENV NEXT_SHARP_PATH=/app/node_modules/sharp
 ENV API_URL=http://localhost:3000
 RUN pnpm run build
 
-FROM alpine:3.21
+FROM alpine:3.23
 RUN apk add --no-cache bash curl nodejs npm
 RUN npm install -g pnpm
 
