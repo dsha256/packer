@@ -16,7 +16,7 @@ EXPOSE 3000 4667
 CMD ["air", "-c", ".air.toml"]
 
 # Production stage
-FROM alpine:3.21 AS production
+FROM alpine:3.23 AS production
 WORKDIR /app
 COPY --from=builder /app/packer /usr/local/bin/packer
 COPY config.yaml /app/config.yaml
