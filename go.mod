@@ -3,7 +3,7 @@ module github.com/dsha256/packer
 go 1.25
 
 require (
-	github.com/goccy/go-json v0.10.5
+	github.com/goccy/go-json v0.10.6
 	github.com/stretchr/testify v1.11.1
 	gopkg.in/yaml.v3 v3.0.1
 )
